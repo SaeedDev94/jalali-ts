@@ -9,7 +9,7 @@ Thanks to all contributors
 You may ask yourself we already have `moment-jalaali` which is even more powerful in some cases!
 
 **So why `jalali-ts`?**  
-Because `moment` is a legacy project and according to its document you should avoid to use it in the new projects!
+Because `moment` is a legacy project and according to its document you should avoid using it in the new projects!
 
 Pros:
 

@@ -1,6 +1,7 @@
 import { Utils } from './Utils';
 import { IDate } from './interface/IDate';
 import { IUnit } from './interface/IUnit';
+import { daysInMonth, toGregorian, toJalali } from './helpers';
 
 /**
  * Inspired by:
@@ -76,26 +77,9 @@ export class Jalali {
     return new Jalali(Utils.toDate(year, month, day, hours, minutes, seconds, ms));
   }
 
-  private daysInMonth = (year: number, month: number): number => {
-    year += Utils.div(month, 12);
-    month = Utils.mod(month, 12);
-    if (month < 0) {
-      month += 12
-      year -= 1
-    }
-    if (month < 6) {
-      return 31;
-    } else if (month < 11) {
-      return 30;
-    } else if (Utils.isLeapYear(year)) {
-      return 30;
-    }
-    return 29;
-  }
-
   private update(value: IDate): void {
     this.date = new Date(
-      value.year, value.month - 1, value.date,
+      value.year, value.month, value.date,
       this.date.getHours(), this.date.getMinutes(), this.date.getSeconds(), this.date.getMilliseconds()
     );
   }
@@ -109,50 +93,50 @@ export class Jalali {
   }
 
   getFullYear(): number {
-    return Utils.toJalali(this.date).year;
+    return toJalali(this.date).year;
   }
 
   getMonth(): number {
-    return Utils.toJalali(this.date).month;
+    return toJalali(this.date).month;
   }
 
   getDate(): number {
-    return Utils.toJalali(this.date).date;
+    return toJalali(this.date).date;
   }
 
   setFullYear(value: number): void {
-    const jalaliDate = Utils.toJalali(this.date);
-    const date: number = Math.min(jalaliDate.date, this.daysInMonth(value, jalaliDate.month));
-    const gregorianDate = Utils.toGregorian(value, jalaliDate.month, date);
+    const jalaliDate = toJalali(this.date);
+    const date: number = Math.min(jalaliDate.date, daysInMonth(value, jalaliDate.month));
+    const gregorianDate = toGregorian(value, jalaliDate.month, date);
     this.update(gregorianDate);
   }
 
   setMonth(value: number): void {
-    const jalaliDate = Utils.toJalali(this.date);
-    const date: number = Math.min(jalaliDate.date, this.daysInMonth(jalaliDate.year, value));
+    const jalaliDate = toJalali(this.date);
+    const date: number = Math.min(jalaliDate.date, daysInMonth(jalaliDate.year, value));
     this.setFullYear(jalaliDate.year + Utils.div(value, 12));
     value = Utils.mod(value, 12);
     if (value < 0) {
       value += 12;
       this.add(-1, 'year');
     }
-    const gregorianDate = Utils.toGregorian(this.getFullYear(), value, date);
+    const gregorianDate = toGregorian(this.getFullYear(), value, date);
     this.update(gregorianDate);
   }
 
   setDate(value: number): void {
-    const jalaliDate = Utils.toJalali(this.date);
-    const gregorianDate = Utils.toGregorian(jalaliDate.year, jalaliDate.month, value);
+    const jalaliDate = toJalali(this.date);
+    const gregorianDate = toGregorian(jalaliDate.year, jalaliDate.month, value);
     this.update(gregorianDate);
   }
 
   isLeapYear(): boolean {
-    return Utils.isLeapYear(Utils.toJalali(this.date).year);
+    return Utils.isLeapYear(toJalali(this.date).year);
   }
 
   monthLength(): number {
-    const jalaliDate = Utils.toJalali(this.date);
-    return Utils.monthLength(jalaliDate.year, jalaliDate.month);
+    const jalaliDate = toJalali(this.date);
+    return daysInMonth(jalaliDate.year, jalaliDate.month);
   }
 
   add(value: number, unit: IUnit): Jalali {
@@ -175,7 +159,7 @@ export class Jalali {
 
   startOf(unit: IUnit): Jalali {
     if (unit === 'year') {
-      this.setMonth(1);
+      this.setMonth(0);
     }
     if (unit === 'year' || unit === 'month') {
       this.setDate(1);
@@ -224,7 +208,7 @@ export class Jalali {
     const ref = gregorian ? this.date : this;
 
     const year: number = ref.getFullYear();
-    const month: number = gregorian ? ref.getMonth() + 1 : ref.getMonth();
+    const month: number = ref.getMonth() + 1;
     const date: number = ref.getDate();
 
     const meridian: boolean = format.indexOf('hh') !== -1;

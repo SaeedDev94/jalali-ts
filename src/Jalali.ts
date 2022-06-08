@@ -77,6 +77,10 @@ export class Jalali {
     return new Jalali(Utils.toDate(year, month, day, hours, minutes, seconds, ms));
   }
 
+  static timestamp(value: number): Jalali {
+    return new Jalali(new Date(value));
+  }
+
   private update(value: IDate): void {
     this.date = new Date(
       value.year, value.month, value.date,

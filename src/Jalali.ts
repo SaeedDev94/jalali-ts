@@ -132,8 +132,8 @@ export class Jalali {
     const date: number = Math.min(jalaliDate.date, this.daysInMonth(jalaliDate.year, value));
     this.setFullYear(jalaliDate.year + Utils.div(value, 12));
     value = Utils.mod(value, 12);
-    if (value === 0) {
-      value = 12;
+    if (value < 0) {
+      value += 12;
       this.add(-1, 'year');
     }
     const gregorianDate = Utils.toGregorian(this.getFullYear(), value, date);

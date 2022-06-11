@@ -214,7 +214,6 @@ export class Jalali {
     const month: number = ref.getMonth() + 1;
     const date: number = ref.getDate();
 
-    const meridian: boolean = format.indexOf('hh') !== -1;
     let hours: number = this.date.getHours();
     const minutes: number = this.date.getMinutes();
     const seconds: number = this.date.getSeconds();
@@ -223,23 +222,18 @@ export class Jalali {
     if (format.indexOf('MM') !== -1) value = value.replace('MM', zeroPad(month));
     if (format.indexOf('DD') !== -1) value = value.replace('DD', zeroPad(date));
 
-    if (meridian && format.indexOf('a') !== -1) {
+    if (format.indexOf('HH') !== -1) value = value.replace('HH', zeroPad(hours));
+    if (format.indexOf('mm') !== -1) value = value.replace('mm', zeroPad(minutes));
+    if (format.indexOf('ss') !== -1) value = value.replace('ss', zeroPad(seconds));
+
+    if (format.indexOf('hh') !== -1) {
       const symbol = hours >= 12 ? 'pm' : 'am';
-      value = value.replace('a', symbol);
-    }
-    if (meridian && format.indexOf('A') !== -1) {
-      const symbol = hours >= 12 ? 'PM' : 'AM';
-      value = value.replace('A', symbol);
-    }
-    if (meridian) {
+      if (format.indexOf('a') !== -1) value = value.replace('a', symbol);
+      if (format.indexOf('A') !== -1) value = value.replace('A', symbol.toUpperCase());
       if (hours === 0) hours = 12;
       if (hours >= 13 && hours <= 23) hours -= 12;
       value = value.replace('hh', zeroPad(hours));
     }
-
-    if (format.indexOf('HH') !== -1) value = value.replace('HH', zeroPad(hours));
-    if (format.indexOf('mm') !== -1) value = value.replace('mm', zeroPad(minutes));
-    if (format.indexOf('ss') !== -1) value = value.replace('ss', zeroPad(seconds));
 
     return value;
   }

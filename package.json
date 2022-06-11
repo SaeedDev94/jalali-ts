@@ -1,7 +1,7 @@
 {
   "name": "jalali-ts",
   "description": "Parse and interact with jalali date",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "license": "MIT",
   "repository": "Saeed-Pooyanfar/jalali-ts",
   "author": {

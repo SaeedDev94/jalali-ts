@@ -94,6 +94,22 @@ export class Jalali {
     return toJalali(this.date).date;
   }
 
+  getHours(): number {
+    return this.date.getHours();
+  }
+
+  getMinutes(): number {
+    return this.date.getMinutes();
+  }
+
+  getSeconds(): number {
+    return this.date.getSeconds();
+  }
+
+  getMilliseconds(): number {
+    return this.date.getMilliseconds();
+  }
+
   setFullYear(value: number): void {
     const jalaliDate = toJalali(this.date);
     const date: number = Math.min(jalaliDate.date, monthLength(value, jalaliDate.month));
@@ -118,6 +134,26 @@ export class Jalali {
     const jalaliDate = toJalali(this.date);
     const gregorianDate = toGregorian(jalaliDate.year, jalaliDate.month, value);
     this.update(gregorianDate);
+  }
+
+  setHours(value: number): Jalali {
+    this.date.setHours(value);
+    return this;
+  }
+
+  setMinutes(value: number): Jalali {
+    this.date.setMinutes(value);
+    return this;
+  }
+
+  setSeconds(value: number): Jalali {
+    this.date.setSeconds(value);
+    return this;
+  }
+
+  setMilliseconds(value: number): Jalali {
+    this.date.setMilliseconds(value);
+    return this;
   }
 
   isLeapYear(): boolean {
@@ -171,7 +207,7 @@ export class Jalali {
   endOf(unit: IUnit): Jalali {
     this.startOf(unit);
     this.add(1, unit);
-    this.date.setMilliseconds(-1);
+    this.setMilliseconds(-1);
     return this;
   }
 
@@ -200,9 +236,9 @@ export class Jalali {
     const month: number = ref.getMonth() + 1;
     const date: number = ref.getDate();
 
-    let hours: number = this.date.getHours();
-    const minutes: number = this.date.getMinutes();
-    const seconds: number = this.date.getSeconds();
+    let hours: number = ref.getHours();
+    const minutes: number = ref.getMinutes();
+    const seconds: number = ref.getSeconds();
 
     if (format.indexOf('YYYY') !== -1) value = value.replace('YYYY', String(year));
     if (format.indexOf('MM') !== -1) value = value.replace('MM', zeroPad(month));

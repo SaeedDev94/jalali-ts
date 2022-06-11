@@ -1,7 +1,7 @@
 import { Utils } from './Utils';
 import { IDate } from './interface/IDate';
 import { IUnit } from './interface/IUnit';
-import { daysInMonth, toGregorian, toJalali } from './helpers';
+import { daysInMonth, toGregorian, toJalali, zeroPad } from './helpers';
 
 /**
  * Inspired by:
@@ -208,7 +208,6 @@ export class Jalali {
 
   format(format: string, gregorian: boolean = false): string {
     let value: string = String(format);
-    const zeroPad = (value: number): string => String(value).padStart(2, '0');
     const ref = gregorian ? this.date : this;
 
     const year: number = ref.getFullYear();

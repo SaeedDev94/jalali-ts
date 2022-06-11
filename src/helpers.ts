@@ -30,8 +30,11 @@ const toGregorian = (year: number, month: number, date: number): IDate => {
   return gregorian;
 }
 
+const zeroPad = (value: number): string => String(value).padStart(2, '0');
+
 export {
   daysInMonth,
   toJalali,
-  toGregorian
+  toGregorian,
+  zeroPad
 }

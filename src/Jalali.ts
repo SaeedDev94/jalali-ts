@@ -110,14 +110,15 @@ export class Jalali {
     return this.date.getMilliseconds();
   }
 
-  setFullYear(value: number): void {
+  setFullYear(value: number): Jalali {
     const jalaliDate = toJalali(this.date);
     const date: number = Math.min(jalaliDate.date, monthLength(value, jalaliDate.month));
     const gregorianDate = toGregorian(value, jalaliDate.month, date);
     this.update(gregorianDate);
+    return this;
   }
 
-  setMonth(value: number): void {
+  setMonth(value: number): Jalali {
     const jalaliDate = toJalali(this.date);
     const date: number = Math.min(jalaliDate.date, monthLength(jalaliDate.year, value));
     this.setFullYear(jalaliDate.year + Utils.div(value, 12));
@@ -128,12 +129,14 @@ export class Jalali {
     }
     const gregorianDate = toGregorian(this.getFullYear(), value, date);
     this.update(gregorianDate);
+    return this;
   }
 
-  setDate(value: number): void {
+  setDate(value: number): Jalali {
     const jalaliDate = toJalali(this.date);
     const gregorianDate = toGregorian(jalaliDate.year, jalaliDate.month, value);
     this.update(gregorianDate);
+    return this;
   }
 
   setHours(value: number): Jalali {

@@ -1,7 +1,7 @@
 import { Utils } from './Utils';
 import { IDate } from './interface/IDate';
 import { IUnit } from './interface/IUnit';
-import { daysInMonth, toGregorian, toJalali, zeroPad } from './helpers';
+import { monthLength, toGregorian, toJalali, zeroPad } from './helpers';
 
 /**
  * Inspired by:
@@ -110,14 +110,14 @@ export class Jalali {
 
   setFullYear(value: number): void {
     const jalaliDate = toJalali(this.date);
-    const date: number = Math.min(jalaliDate.date, daysInMonth(value, jalaliDate.month));
+    const date: number = Math.min(jalaliDate.date, monthLength(value, jalaliDate.month));
     const gregorianDate = toGregorian(value, jalaliDate.month, date);
     this.update(gregorianDate);
   }
 
   setMonth(value: number): void {
     const jalaliDate = toJalali(this.date);
-    const date: number = Math.min(jalaliDate.date, daysInMonth(jalaliDate.year, value));
+    const date: number = Math.min(jalaliDate.date, monthLength(jalaliDate.year, value));
     this.setFullYear(jalaliDate.year + Utils.div(value, 12));
     value = Utils.mod(value, 12);
     if (value < 0) {
@@ -140,7 +140,7 @@ export class Jalali {
 
   monthLength(): number {
     const jalaliDate = toJalali(this.date);
-    return daysInMonth(jalaliDate.year, jalaliDate.month);
+    return monthLength(jalaliDate.year, jalaliDate.month);
   }
 
   add(value: number, unit: IUnit): Jalali {

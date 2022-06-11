@@ -212,14 +212,10 @@ export class Jalali {
 
   dayOfYear(value?: number): any {
     const jalali = this.clone();
-    jalali.startOf('day');
-    const startOfDay: number = jalali.date.valueOf();
-    jalali.startOf('year');
-    const startOfYear: number = jalali.date.valueOf();
+    const startOfDay: number = +jalali.startOf('day');
+    const startOfYear: number = +jalali.startOf('year');
     const dayOfYear: number =  Math.round((startOfDay - startOfYear) / 864e5) + 1;
-    if (value === undefined) {
-      return dayOfYear;
-    }
+    if (value === undefined) return dayOfYear;
     this.add(value - dayOfYear, 'day');
     return this;
   }

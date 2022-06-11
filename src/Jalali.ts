@@ -199,10 +199,10 @@ export class Jalali {
       this.date.setDate(startOfWeek);
     }
 
-    this.date.setHours(0);
-    this.date.setMinutes(0);
-    this.date.setSeconds(0);
-    this.date.setMilliseconds(0);
+    this.setHours(0);
+    this.setMinutes(0);
+    this.setSeconds(0);
+    this.setMilliseconds(0);
 
     return this;
   }

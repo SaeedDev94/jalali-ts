@@ -23,11 +23,40 @@ const monthLength = (year: number, month: number): number => {
   return Utils.monthLength(year, month + 1);
 }
 
+const normalizeNumbers = (date: string): string => {
+  const persianNumbers = new Map<string, string>();
+  persianNumbers.set('۰', '0');
+  persianNumbers.set('۱', '1');
+  persianNumbers.set('۲', '2');
+  persianNumbers.set('۳', '3');
+  persianNumbers.set('۴', '4');
+  persianNumbers.set('۵', '5');
+  persianNumbers.set('۶', '6');
+  persianNumbers.set('۷', '7');
+  persianNumbers.set('۸', '8');
+  persianNumbers.set('۹', '9');
+
+  return String(date).split('').map((char: string) => persianNumbers.get(char) ?? char).join('');
+}
+
+const normalizeHours = (date: string, hours: number): number => {
+  let meridian: 'am' | 'pm' | null = null;
+  if (date.indexOf('am') !== -1 || date.indexOf('AM') !== -1)  meridian = 'am';
+  if (date.indexOf('pm') !== -1 || date.indexOf('PM') !== -1) meridian = 'pm';
+
+  if (meridian === 'am' && hours === 12) return 0;
+  if (meridian === 'pm' && (hours >= 1 && hours <= 11)) return hours + 12;
+
+  return (meridian !== null && hours > 12) ? -1 : hours;
+}
+
 const zeroPad = (value: number): string => String(value).padStart(2, '0');
 
 export {
   toJalali,
   toGregorian,
   monthLength,
+  normalizeNumbers,
+  normalizeHours,
   zeroPad
 }

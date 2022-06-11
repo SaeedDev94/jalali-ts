@@ -1,7 +1,14 @@
 import { Utils } from './Utils';
 import { IDate } from './interface/IDate';
 import { IUnit } from './interface/IUnit';
-import { monthLength, toGregorian, toJalali, zeroPad } from './helpers';
+import {
+  monthLength,
+  normalizeHours,
+  normalizeNumbers,
+  toGregorian,
+  toJalali,
+  zeroPad
+} from './helpers';
 
 /**
  * Inspired by:
@@ -16,25 +23,18 @@ export class Jalali {
   ) {
   }
 
-  static parse(value: string): Jalali {
+  static parse(value: string, gregorian: boolean = false): Jalali {
     const throwError = () => {throw new Error(`Invalid: ${value}`)};
-    const persianNumbers = new Map<string, string>();
-    persianNumbers.set('۰', '0');
-    persianNumbers.set('۱', '1');
-    persianNumbers.set('۲', '2');
-    persianNumbers.set('۳', '3');
-    persianNumbers.set('۴', '4');
-    persianNumbers.set('۵', '5');
-    persianNumbers.set('۶', '6');
-    persianNumbers.set('۷', '7');
-    persianNumbers.set('۸', '8');
-    persianNumbers.set('۹', '9');
 
-    let newValue: string = String(value).split('').map((char: string) => persianNumbers.get(char) ?? char).join('');
+    if (gregorian) {
+      const date = new Date(value);
+      if (Number.isNaN(date.valueOf())) throwError();
+      return new Jalali(date);
+    }
 
+    let newValue: string = normalizeNumbers(value);
     const fourDigits: RegExp = /\d{4}/g;
     const oneOrTwoDigits: RegExp = /\d\d?/g;
-
     const extract = (pattern: RegExp): number => {
       const stringValue = newValue.match(pattern)?.shift();
       const numberValue = Number(stringValue);
@@ -45,25 +45,11 @@ export class Jalali {
 
     const year: number = extract(fourDigits);
     const month: number = extract(oneOrTwoDigits);
-    const day: number = extract(oneOrTwoDigits);
+    const date: number = extract(oneOrTwoDigits);
 
-    if (!Utils.isValid(year, month, day)) throwError();
+    if (!Utils.isValid(year, month, date)) throwError();
 
-    const meridian = ((): 'am' | 'pm' | null => {
-      if (newValue.indexOf('am') !== -1 || newValue.indexOf('AM') !== -1) return 'am';
-      if (newValue.indexOf('pm') !== -1 || newValue.indexOf('PM') !== -1) return 'pm';
-      return null;
-    })();
-    const normalizeHours = (value: number): number => {
-      if (meridian === 'am' && value === 12) return 0;
-      if (meridian === 'pm' && (value >= 1 && value <= 11)) return value + 12;
-
-      if (meridian !== null && value > 12) throwError();
-
-      return value;
-    };
-
-    const hours: number = normalizeHours(extract(oneOrTwoDigits));
+    const hours: number = normalizeHours(value, extract(oneOrTwoDigits));
     const minutes: number = extract(oneOrTwoDigits);
     const seconds: number = extract(oneOrTwoDigits);
     const ms: number = 0;
@@ -74,7 +60,7 @@ export class Jalali {
 
     if (invalidHours || invalidMinutes || invalidSeconds) throwError();
 
-    return new Jalali(Utils.toDate(year, month, day, hours, minutes, seconds, ms));
+    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, ms));
   }
 
   static timestamp(value: number): Jalali {

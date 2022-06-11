@@ -70,7 +70,7 @@ export class Jalali {
   private update(value: IDate): void {
     this.date = new Date(
       value.year, value.month, value.date,
-      this.date.getHours(), this.date.getMinutes(), this.date.getSeconds(), this.date.getMilliseconds()
+      this.getHours(), this.getMinutes(), this.getSeconds(), this.getMilliseconds()
     );
   }
 
@@ -198,19 +198,12 @@ export class Jalali {
       const startOfWeek: number = this.date.getDate() - (dayOfDate === 6 ? 0 : this.date.getDay() + 1);
       this.date.setDate(startOfWeek);
     }
-
-    this.setHours(0);
-    this.setMinutes(0);
-    this.setSeconds(0);
-    this.setMilliseconds(0);
-
+    this.setHours(0).setMinutes(0).setSeconds(0).setMilliseconds(0);
     return this;
   }
 
   endOf(unit: IUnit): Jalali {
-    this.startOf(unit);
-    this.add(1, unit);
-    this.setMilliseconds(-1);
+    this.startOf(unit).add(1, unit).setMilliseconds(-1);
     return this;
   }
 

@@ -2,7 +2,7 @@
   "name": "jalali-ts",
   "description": "Parse and interact with jalali date",
   "keywords": ["jalali", "jalaali", "shamsi", "khorshidi", "persian", "date", "convert", "typescript", "es2020"],
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "repository": "Saeed-Pooyanfar/jalali-ts",
   "author": {

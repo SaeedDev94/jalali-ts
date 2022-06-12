@@ -32,11 +32,11 @@ npm install jalali-ts
 
 - `YYYY` year
 - `MM` month
-- `DD` day
-- `HH` hour (standard 24h)
-- `hh` hour (12h format)
-- `mm` minute
-- `ss` second
+- `DD` date
+- `HH` hours (standard 24h)
+- `hh` hours (12h format)
+- `mm` minutes
+- `ss` seconds
 - `a` meridian (am, pm)
 - `A` meridian (AM, PM)
 
@@ -48,7 +48,7 @@ new Jalali().format('YYYY/MM/DD HH:mm:ss');
 
 # Parse date
 
-To parse a jalali date you should follow `year month day [hour minute second]` pattern:
+To parse a jalali date you should follow `year month date [hours minutes seconds]` pattern:
 
 ```typescript
 import { Jalali } from 'jalali-ts';

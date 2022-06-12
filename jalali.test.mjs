@@ -21,8 +21,8 @@ describe('Jalali', () => {
       ));
       it("Same gregorian: '2020/02/23'", () => assert.equal(
         jalali.format(dateFormat, true),
-        '2020/02/23')
-      );
+        '2020/02/23'
+      ));
       it("Is leap year: false", () => assert.equal(
         jalali.isLeapYear(),
         false

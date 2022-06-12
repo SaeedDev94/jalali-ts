@@ -220,7 +220,7 @@ export class Jalali {
     return this;
   }
 
-  format(format: string, gregorian: boolean = false): string {
+  format(format: string = 'YYYY-MM-DD HH:mm:ss', gregorian: boolean = false): string {
     let value: string = String(format);
     const ref = gregorian ? this.date : this;
 

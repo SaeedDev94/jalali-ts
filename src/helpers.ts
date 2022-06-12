@@ -41,8 +41,8 @@ const normalizeNumbers = (date: string): string => {
 
 const normalizeHours = (date: string, hours: number): number => {
   let meridian: 'am' | 'pm' | null = null;
-  if (String(date).toLowerCase().indexOf('am') !== -1) meridian = 'am';
-  if (String(date).toLowerCase().indexOf('pm') !== -1) meridian = 'pm';
+  if (String(date).toLowerCase().includes('am')) meridian = 'am';
+  if (String(date).toLowerCase().includes('pm')) meridian = 'pm';
 
   if (meridian === 'am' && hours === 12) return 0;
   if (meridian === 'pm' && (hours >= 1 && hours <= 11)) return hours + 12;

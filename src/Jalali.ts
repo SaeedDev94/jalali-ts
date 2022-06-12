@@ -232,18 +232,18 @@ export class Jalali {
     const minutes: number = ref.getMinutes();
     const seconds: number = ref.getSeconds();
 
-    if (format.indexOf('YYYY') !== -1) value = value.replace('YYYY', String(year));
-    if (format.indexOf('MM') !== -1) value = value.replace('MM', zeroPad(month));
-    if (format.indexOf('DD') !== -1) value = value.replace('DD', zeroPad(date));
+    if (format.includes('YYYY')) value = value.replace('YYYY', String(year));
+    if (format.includes('MM')) value = value.replace('MM', zeroPad(month));
+    if (format.includes('DD')) value = value.replace('DD', zeroPad(date));
 
-    if (format.indexOf('HH') !== -1) value = value.replace('HH', zeroPad(hours));
-    if (format.indexOf('mm') !== -1) value = value.replace('mm', zeroPad(minutes));
-    if (format.indexOf('ss') !== -1) value = value.replace('ss', zeroPad(seconds));
+    if (format.includes('HH')) value = value.replace('HH', zeroPad(hours));
+    if (format.includes('mm')) value = value.replace('mm', zeroPad(minutes));
+    if (format.includes('ss')) value = value.replace('ss', zeroPad(seconds));
 
-    if (format.indexOf('hh') !== -1) {
+    if (format.includes('hh')) {
       const symbol = hours >= 12 ? 'pm' : 'am';
-      if (format.indexOf('a') !== -1) value = value.replace('a', symbol);
-      if (format.indexOf('A') !== -1) value = value.replace('A', symbol.toUpperCase());
+      if (format.includes('a')) value = value.replace('a', symbol);
+      if (format.includes('A')) value = value.replace('A', symbol.toUpperCase());
       if (hours === 0) hours = 12;
       if (hours >= 13 && hours <= 23) hours -= 12;
       value = value.replace('hh', zeroPad(hours));

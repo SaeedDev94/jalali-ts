@@ -28,7 +28,7 @@ export class Jalali {
 
     if (gregorian) {
       const date = new Date(value);
-      if (Number.isNaN(date.valueOf())) throwError();
+      if (Number.isNaN(+date)) throwError();
       return new Jalali(date);
     }
 

@@ -1,5 +1,5 @@
 .idea
 src
-jalali.test.mjs
+test.mjs
 esbuild.mjs
 tsconfig.json

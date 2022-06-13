@@ -17,11 +17,11 @@ describe('Jalali', () => {
       const valueOf = 1582403400000;
       it(`valueOf: ${valueOf}`, () => assert.equal(jalali.valueOf(), valueOf));
 
-      const toString = '1398/12/04 00:00:00';
-      it(`toString: ${toString}`, () => assert.equal(jalali.toString(), toString));
-
       const gregorian = '2020-02-23 00:00:00';
       it(`gregorian: '${gregorian}'`, () => assert.equal(jalali.gregorian(), gregorian));
+
+      const toString = '1398/12/04 00:00:00';
+      it(`toString: ${toString}`, () => assert.equal(jalali.toString(), toString));
 
       const is1398LeapYear = false;
       it(`Is leap year: ${is1398LeapYear}`, () => assert.equal(jalali.isLeapYear(), is1398LeapYear));

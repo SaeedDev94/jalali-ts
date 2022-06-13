@@ -55,12 +55,14 @@ import { Jalali } from 'jalali-ts';
 
 const jalali = Jalali.parse('1398/12/04');
 
+jalali.valueOf(); // 1582403400000
+jalali.gregorian(); // 2020-02-23 00:00:00
 jalali.isLeapYear(); // false
 jalali.monthLength(); // 29
-jalali.add(2, 'month').add(1, 'week'); // 1399/02/11
-jalali.startOf('week'); // 1399/02/06
+jalali.add(2, 'month').add(1, 'week'); // 1399/02/11 00:00:00
+jalali.startOf('week'); // 1399/02/06 00:00:00
 jalali.dayOfYear(); // 37
-jalali.endOf('year'); // 1399/12/30
+jalali.endOf('year'); // 1399/12/30 23:59:59
 jalali.isLeapYear(); // true
-jalali.add(1, 'day').startOf('day').format('YYYY-MM-DD hh:mm:ss A'); // 1400-01-01 12:00:00 AM 
+jalali.add(1, 'day').startOf('day'); // 1400/01/01 00:00:00 
 ```

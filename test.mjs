@@ -27,7 +27,7 @@ describe('Jalali', () => {
       it(`#isLeapYear: ${is1398LeapYear}`, () => assert.equal(jalali.isLeapYear(), is1398LeapYear));
 
       const monthLength = 29;
-      it(`#monthLength: ${monthLength}`, () => assert.equal(jalali.monthLength(), 29));
+      it(`#monthLength: ${monthLength}`, () => assert.equal(jalali.monthLength(), monthLength));
 
       const add2MonthAnd1Week = '1399/02/11 00:00:00';
       it(`#add(2, 'month').add(1, 'week'): '${add2MonthAnd1Week}'`, () => assert.equal(jalali.add(2, 'month').add(1, 'week').format(), add2MonthAnd1Week));

@@ -56,8 +56,8 @@ import { Jalali } from 'jalali-ts';
 const jalali = Jalali.parse('1398/12/04');
 
 jalali.valueOf(); // 1582403400000
-jalali.toString(); // 1398/12/04 00:00:00
 jalali.gregorian(); // 2020-02-23 00:00:00
+jalali.toString(); // 1398/12/04 00:00:00
 jalali.isLeapYear(); // false
 jalali.monthLength(); // 29
 jalali.add(2, 'month').add(1, 'week'); // 1399/02/11 00:00:00

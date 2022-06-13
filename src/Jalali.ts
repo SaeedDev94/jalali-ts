@@ -82,6 +82,10 @@ export class Jalali {
     return this.date.valueOf();
   }
 
+  toString(): string {
+    return this.format();
+  }
+
   getFullYear(): number {
     return toJalali(this.date).year;
   }

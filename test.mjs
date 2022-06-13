@@ -14,11 +14,14 @@ describe('Jalali', () => {
     describe("Parse date: '1398/12/04'", () => {
       const jalali = Jalali.parse('1398/12/04');
 
-      const timestamp = 1582403400000;
-      it(`Same timestamp: ${timestamp}`, () => assert.equal(+jalali, timestamp));
+      const valueOf = 1582403400000;
+      it(`valueOf: ${valueOf}`, () => assert.equal(jalali.valueOf(), valueOf));
+
+      const toString = '1398/12/04 00:00:00';
+      it(`toString: ${toString}`, () => assert.equal(jalali.toString(), toString));
 
       const gregorian = '2020-02-23 00:00:00';
-      it(`Same gregorian: '${gregorian}'`, () => assert.equal(jalali.gregorian(), gregorian));
+      it(`gregorian: '${gregorian}'`, () => assert.equal(jalali.gregorian(), gregorian));
 
       const is1398LeapYear = false;
       it(`Is leap year: ${is1398LeapYear}`, () => assert.equal(jalali.isLeapYear(), is1398LeapYear));

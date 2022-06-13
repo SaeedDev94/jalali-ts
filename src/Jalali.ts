@@ -252,4 +252,8 @@ export class Jalali {
     return value;
   }
 
+  gregorian(format: string = 'YYYY-MM-DD HH:mm:ss'): string {
+    return this.format(format, true);
+  }
+
 }

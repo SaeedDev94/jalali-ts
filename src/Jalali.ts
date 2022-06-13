@@ -63,6 +63,10 @@ export class Jalali {
     return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, ms));
   }
 
+  static gregorian(value: string): Jalali {
+    return Jalali.parse(value, true);
+  }
+
   static timestamp(value: number): Jalali {
     return new Jalali(new Date(value));
   }

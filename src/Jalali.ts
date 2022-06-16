@@ -71,6 +71,10 @@ export class Jalali {
     return new Jalali(new Date(value));
   }
 
+  static now(): Jalali {
+    return new Jalali();
+  }
+
   private update(value: IDate): void {
     this.date = new Date(
       value.year, value.month, value.date,

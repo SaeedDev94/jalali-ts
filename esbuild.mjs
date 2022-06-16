@@ -16,7 +16,7 @@ build({
         build.onStart(() => {
           execSync('rm -rf dist');
           execSync('tsc');
-          execSync('rm dist/*.js && rm dist/interface/*.js');
+          execSync('find ./dist -type f -name "*.js" -delete');
         })
       }
     }

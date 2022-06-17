@@ -83,7 +83,7 @@ export class Jalali {
   }
 
   clone(): Jalali {
-    return new Jalali(this.date);
+    return Jalali.timestamp(+this);
   }
 
   valueOf(): number {

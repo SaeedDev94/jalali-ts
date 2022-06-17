@@ -14,6 +14,19 @@ describe('Jalali', () => {
       );
     });
 
+    describe('Clone jalali', () => {
+      const now = Jalali.now();
+      const clone = now.clone();
+      it(
+        "Shouldn't be same with its clone",
+        () => assert.equal(now === clone, false)
+      );
+      it(
+        'Should has same value',
+        () => assert.equal(+now === +clone, true)
+      );
+    });
+
     describe("Parse date: '1398/12/04'", () => {
       const jalali = Jalali.parse('1398/12/04');
 

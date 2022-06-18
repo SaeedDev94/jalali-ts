@@ -43,7 +43,7 @@ npm install jalali-ts
 ```typescript
 import { Jalali } from 'jalali-ts';
 
-new Jalali().format('YYYY/MM/DD HH:mm:ss');
+Jalali.now().format('YYYY/MM/DD hh:mm:ss A');
 ```
 
 # Parse date

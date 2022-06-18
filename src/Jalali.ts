@@ -24,6 +24,8 @@ export class Jalali {
   }
 
   static parse(value: string, gregorian: boolean = false): Jalali {
+    const fourDigits: RegExp = /\d{4}/g;
+    const oneOrTwoDigits: RegExp = /\d\d?/g;
     const throwError = () => {throw new Error(`Invalid: ${value}`)};
 
     if (gregorian) {
@@ -33,8 +35,6 @@ export class Jalali {
     }
 
     let newValue: string = normalizeNumbers(value);
-    const fourDigits: RegExp = /\d{4}/g;
-    const oneOrTwoDigits: RegExp = /\d\d?/g;
     const extract = (pattern: RegExp): number => {
       const stringValue = newValue.match(pattern)?.shift();
       const numberValue = Number(stringValue);
@@ -73,13 +73,6 @@ export class Jalali {
 
   static now(): Jalali {
     return new Jalali();
-  }
-
-  private update(value: IDate): void {
-    this.date = new Date(
-      value.year, value.month, value.date,
-      this.getHours(), this.getMinutes(), this.getSeconds(), this.getMilliseconds()
-    );
   }
 
   clone(): Jalali {
@@ -266,6 +259,13 @@ export class Jalali {
 
   gregorian(format: string = 'YYYY-MM-DD HH:mm:ss'): string {
     return this.format(format, true);
+  }
+
+  private update(value: IDate): void {
+    this.date = new Date(
+      value.year, value.month, value.date,
+      this.getHours(), this.getMinutes(), this.getSeconds(), this.getMilliseconds()
+    );
   }
 
 }

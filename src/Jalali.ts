@@ -24,35 +24,28 @@ export class Jalali {
   }
 
   static parse(value: string, gregorian: boolean = false): Jalali {
-    const fourDigits: RegExp = /\d{4}/g;
-    const oneOrTwoDigits: RegExp = /\d\d?/g;
+    const strValue: string = normalizeNumbers(value);
     const throwError = () => {throw new Error(`Invalid: ${value}`)};
 
     if (gregorian) {
-      const date = new Date(value);
+      const date = new Date(strValue);
       if (Number.isNaN(+date)) throwError();
       return new Jalali(date);
     }
 
-    let newValue: string = normalizeNumbers(value);
-    const extract = (pattern: RegExp): number => {
-      const stringValue = newValue.match(pattern)?.shift();
-      const numberValue = Number(stringValue);
-      if (Number.isNaN(numberValue)) return 0;
-      if (stringValue) newValue = newValue.replace(stringValue, '');
-      return numberValue;
-    };
+    const strYear: string = strValue.match(/\d{4}/g)?.shift() || '';
+    if (!strYear) throwError();
 
-    const year: number = extract(fourDigits);
-    const month: number = extract(oneOrTwoDigits);
-    const date: number = extract(oneOrTwoDigits);
+    const empty: number[] = new Array(7).fill(0);
+    const [ year, month, date, hours, minutes, seconds, ms ] = [
+      (Number(strYear) || 0),
+      ...(strValue.replace(strYear, '').match(/\d\d?/g) || [])
+    ].map(Number)
+      .concat(empty)
+      .slice(0, 7)
+      .map((val: number, index: number) => index === 3 ? normalizeHours(strValue, val) : val);
 
     if (!Utils.isValid(year, month, date)) throwError();
-
-    const hours: number = normalizeHours(value, extract(oneOrTwoDigits));
-    const minutes: number = extract(oneOrTwoDigits);
-    const seconds: number = extract(oneOrTwoDigits);
-    const ms: number = 0;
 
     const invalidHours: boolean = hours < 0 || hours > 23;
     const invalidMinutes: boolean = minutes < 0 || minutes > 59;

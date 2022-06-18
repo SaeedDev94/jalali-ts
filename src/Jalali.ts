@@ -36,13 +36,13 @@ export class Jalali {
     const strYear: string = strValue.match(/\d{4}/g)?.shift() || '';
     if (!strYear) throwError();
 
-    const empty: number[] = new Array(7).fill(0);
-    const [ year, month, date, hours, minutes, seconds, ms ] = [
+    const empty: number[] = new Array(6).fill(0);
+    const [ year, month, date, hours, minutes, seconds ] = [
       (Number(strYear) || 0),
       ...(strValue.replace(strYear, '').match(/\d\d?/g) || [])
     ].map(Number)
       .concat(empty)
-      .slice(0, 7)
+      .slice(0, 6)
       .map((val: number, index: number) => index === 3 ? normalizeHours(strValue, val) : val);
 
     if (!Utils.isValid(year, month, date)) throwError();
@@ -53,7 +53,7 @@ export class Jalali {
 
     if (invalidHours || invalidMinutes || invalidSeconds) throwError();
 
-    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, ms));
+    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, 0));
   }
 
   static gregorian(value: string): Jalali {

@@ -80,7 +80,7 @@ export class Jalali {
   }
 
   valueOf(): number {
-    return this.date.valueOf();
+    return +this.date;
   }
 
   toString(): string {

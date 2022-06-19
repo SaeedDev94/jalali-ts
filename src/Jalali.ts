@@ -2,6 +2,7 @@ import { Utils } from './Utils';
 import { IDate } from './interface/IDate';
 import { IUnit } from './interface/IUnit';
 import {
+  checkTimeZone,
   monthLength,
   normalizeHours,
   normalizeMilliseconds,
@@ -25,6 +26,8 @@ export class Jalali {
   }
 
   static parse(stringValue: string, includeMilliseconds: boolean = false): Jalali {
+    checkTimeZone();
+
     const value: string = normalizeNumbers(stringValue);
     const matches: string[] = (value.match(/\d\d?\d?\d?/g) || []);
     const empty: string[] = new Array(7).fill('0');
@@ -208,6 +211,8 @@ export class Jalali {
   }
 
   format(format: string = 'YYYY/MM/DD HH:mm:ss', gregorian: boolean = false): string {
+    checkTimeZone();
+
     let value: string = String(format);
     const ref = gregorian ? this.date : this;
 

@@ -4,7 +4,8 @@ import { IUnit } from './interface/IUnit';
 import {
   monthLength,
   normalizeHours,
-  normalizeNumbers,
+  normalizeMilliseconds,
+  normalizeNumbers, throwError,
   toGregorian,
   toJalali,
   zeroPad
@@ -23,41 +24,29 @@ export class Jalali {
   ) {
   }
 
-  static parse(value: string, gregorian: boolean = false): Jalali {
-    const strValue: string = normalizeNumbers(value);
-    const throwError = () => {throw new Error(`Invalid: ${value}`)};
+  static parse(stringValue: string, includeMilliseconds: boolean = false): Jalali {
+    const value: string = normalizeNumbers(stringValue);
+    const matches: string[] = (value.match(/\d\d?\d?\d?/g) || []);
+    const empty: string[] = new Array(7).fill('0');
+    const [ year, month, date, hours, minutes, seconds, ms ] = [ ...matches, ...empty ]
+      .slice(0, 7)
+      .map((val: string, index: number): number => {
+        let numberValue: number = Number(val);
+        if (index === 3) numberValue = normalizeHours(value, Number(val));
+        else if (index === 6) numberValue = includeMilliseconds ? normalizeMilliseconds(val) : 0;
+        return numberValue;
+      });
 
-    if (gregorian) {
-      const date = new Date(strValue);
-      if (Number.isNaN(+date)) throwError();
-      return new Jalali(date);
-    }
+    if (!Utils.isValid(year, month, date, hours, minutes, seconds, ms)) throwError(stringValue);
 
-    const strYear: string = strValue.match(/\d{4}/g)?.shift() || '';
-    if (!strYear) throwError();
-
-    const empty: number[] = new Array(6).fill(0);
-    const [ year, month, date, hours, minutes, seconds ] = [
-      (Number(strYear) || 0),
-      ...(strValue.replace(strYear, '').match(/\d\d?/g) || [])
-    ].map(Number)
-      .concat(empty)
-      .slice(0, 6)
-      .map((val: number, index: number) => index === 3 ? normalizeHours(strValue, val) : val);
-
-    if (!Utils.isValid(year, month, date)) throwError();
-
-    const invalidHours: boolean = hours < 0 || hours > 23;
-    const invalidMinutes: boolean = minutes < 0 || minutes > 59;
-    const invalidSeconds: boolean = seconds < 0 || seconds > 59;
-
-    if (invalidHours || invalidMinutes || invalidSeconds) throwError();
-
-    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, 0));
+    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, ms));
   }
 
-  static gregorian(value: string): Jalali {
-    return Jalali.parse(value, true);
+  static gregorian(stringValue: string): Jalali {
+    const value: string = normalizeNumbers(stringValue);
+    const date = new Date(value);
+    if (Number.isNaN(+date)) throwError(stringValue);
+    return new Jalali(date);
   }
 
   static timestamp(value: number): Jalali {

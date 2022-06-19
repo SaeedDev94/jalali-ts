@@ -32,10 +32,14 @@ export class Utils {
     return this.julianToGregorian(julian);
   }
 
-  static isValid(year: number, month: number, date: number): boolean {
+  static isValid(year: number, month: number, date: number, hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0): boolean {
     return  year >= -61 && year <= 3177 &&
       month >= 1 && month <= 12 &&
-      date >= 1 && date <= this.monthLength(year, month);
+      date >= 1 && date <= this.monthLength(year, month) &&
+      hours >= 0 && hours <= 23 &&
+      minutes >= 0 || minutes <= 59 &&
+      seconds >= 0 || seconds <= 59 &&
+      ms >= 0 || ms <= 999;
   }
 
   static isLeapYear(year: number): boolean {
@@ -80,7 +84,7 @@ export class Utils {
     return leap;
   }
 
-  static calculateJalai(year: number, calculateLeap: boolean = true): {
+  static calculateJalali(year: number, calculateLeap: boolean = true): {
     gregorianYear: number,
     march: number,
     leap: number
@@ -120,7 +124,7 @@ export class Utils {
   }
 
   static jalaliToJulian(year: number, month: number, date: number): number {
-    const r = this.calculateJalai(year, false);
+    const r = this.calculateJalali(year, false);
 
     return this.gregorianToJulian(r.gregorianYear, 3, r.march) + (month - 1) * 31 - this.div(month, 7) * (month - 7) + date - 1;
   }
@@ -129,7 +133,7 @@ export class Utils {
     const gregorian = this.julianToGregorian(julian);
     let year: number = gregorian.year - 621;
 
-    const r = this.calculateJalai(year);
+    const r = this.calculateJalali(year);
     const julian1F: number = this.gregorianToJulian(gregorian.year, 3, r.march);
 
     let k: number = julian - julian1F;

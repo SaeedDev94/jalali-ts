@@ -50,7 +50,15 @@ const normalizeHours = (date: string, hours: number): number => {
   return (meridian !== null && hours > 12) ? -1 : hours;
 }
 
+const normalizeMilliseconds = (ms: string): number => {
+  if (ms.length === 1) return Number(ms) * 100;
+  else if (ms.length === 2) return Number(ms) * 10;
+  return ms.length > 3 ? -1 : Number(ms);
+}
+
 const zeroPad = (value: number): string => String(value).padStart(2, '0');
+
+const throwError = (value: string) => {throw new Error(`Invalid: ${value}`)};
 
 export {
   toJalali,
@@ -58,5 +66,7 @@ export {
   monthLength,
   normalizeNumbers,
   normalizeHours,
-  zeroPad
+  normalizeMilliseconds,
+  zeroPad,
+  throwError
 }

@@ -59,7 +59,7 @@ const normalizeMilliseconds = (ms: string): number => {
 const checkTimeZone = () => {
   const tz = Intl?.DateTimeFormat()?.resolvedOptions()?.timeZone;
   if (tz !== 'Asia/Tehran') {
-    console.warn(`System TZ must be 'Asia/Tehran' or you may getting unexpected results`, `current value: ${tz}`);
+    console.warn(`System TZ must be equal to 'Asia/Tehran' or you may getting unexpected results`, `current value: ${tz}`);
   }
 }
 

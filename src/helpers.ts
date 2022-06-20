@@ -56,7 +56,7 @@ const normalizeMilliseconds = (ms: string): number => {
   return ms.length > 3 ? -1 : Number(ms);
 }
 
-const zeroPad = (value: number): string => String(value).padStart(2, '0');
+const zeroPad = (value: number, maxLength: number = 2): string => String(value).padStart(maxLength, '0');
 
 const throwError = (value: string) => {throw new Error(`Invalid: ${value}`)};
 

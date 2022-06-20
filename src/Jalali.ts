@@ -20,15 +20,17 @@ import {
 export class Jalali {
 
   constructor(
-    public date: Date = new Date()
+    public date: Date = new Date(),
+    includeMS: boolean = true
   ) {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (timeZone !== 'Asia/Tehran') {
       throwError(`TZ: ${timeZone}`);
     }
+    if (!includeMS) this.date.setMilliseconds(0);
   }
 
-  static parse(stringValue: string): Jalali {
+  static parse(stringValue: string, includeMS: boolean = true): Jalali {
     const value: string = normalizeNumbers(stringValue);
     const matches: string[] = (value.match(/\d\d?\d?\d?/g) || []);
     const empty: string[] = new Array(7).fill('0');
@@ -43,22 +45,22 @@ export class Jalali {
 
     if (!Utils.isValid(year, month, date, hours, minutes, seconds, ms)) throwError(stringValue);
 
-    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, ms));
+    return new Jalali(Utils.toDate(year, month, date, hours, minutes, seconds, ms), includeMS);
   }
 
-  static gregorian(stringValue: string): Jalali {
+  static gregorian(stringValue: string, includeMS: boolean = true): Jalali {
     const value: string = normalizeNumbers(stringValue);
     const date = new Date(value);
     if (Number.isNaN(+date)) throwError(stringValue);
-    return new Jalali(date);
+    return new Jalali(date, includeMS);
   }
 
-  static timestamp(value: number): Jalali {
-    return new Jalali(new Date(value));
+  static timestamp(value: number, includeMS: boolean = true): Jalali {
+    return new Jalali(new Date(value), includeMS);
   }
 
-  static now(): Jalali {
-    return new Jalali();
+  static now(includeMS: boolean = true): Jalali {
+    return new Jalali(new Date(), includeMS);
   }
 
   clone(): Jalali {

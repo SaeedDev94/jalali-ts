@@ -21,6 +21,7 @@ Cons:
 
 - Limitation for parsing input date
 - Limitation for output format
+- Time zone limited to 'Asia/Tehran'
 
 # Install
 
@@ -37,6 +38,7 @@ npm install jalali-ts
 - `hh` hours (12h format)
 - `mm` minutes
 - `ss` seconds
+- `SSS` milliseconds
 - `a` meridian (am, pm)
 - `A` meridian (AM, PM)
 
@@ -48,7 +50,7 @@ Jalali.now().format('YYYY/MM/DD hh:mm:ss A');
 
 # Parse date
 
-To parse a jalali date you should follow `year month date [hours minutes seconds]` pattern:
+To parse a jalali date you should follow `year month date [hours minutes seconds ms]` pattern:
 
 ```typescript
 import { Jalali } from 'jalali-ts';
@@ -65,5 +67,18 @@ jalali.startOf('week'); // 1399/02/06 00:00:00
 jalali.dayOfYear(); // 37
 jalali.endOf('year'); // 1399/12/30 23:59:59
 jalali.isLeapYear(); // true
-jalali.add(1, 'day').startOf('day'); // 1400/01/01 00:00:00 
+jalali.add(1, 'day').startOf('day'); // 1400/01/01 00:00:00
+
+const dateTime = Jalali.parse('1398/12/04 02:30:07:05 PM');
+dateTime.valueOf(); // 1582455607050
+dateTime.getHours(); // 14
+dateTime.getMinutes(); // 30
+dateTime.getSeconds(); // 7
+dateTime.getMilliseconds(); // 50
+dateTime.gregorian('YYYY-MM-DD HH:mm:ss.SSS'); // 2020-02-23 14:30:07.050
+
+const dateTimeNoMilliseconds = Jalali.parse('1398/12/04 02:30:07:05 PM', false);
+dateTimeNoMilliseconds.valueOf(); // 1582455607000
+dateTimeNoMilliseconds.getMilliseconds(); // 0
+dateTime.gregorian('YYYY-MM-DD HH:mm:ss.SSS'); // 2020-02-23 14:30:07.000
 ```

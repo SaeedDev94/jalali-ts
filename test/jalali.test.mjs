@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
 import { describe, it } from 'mocha';
-import { Jalali } from './dist/index.js';
+import { Jalali } from '../dist/index.js';
 
 describe('Jalali', () => {
   describe('Create new instance', () => {

@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "node esbuild.mjs",
-    "test": "npm run build && mocha test.mjs"
+    "test": "npm run build && mocha test/test.mjs"
   },
   "devDependencies": {
     "@types/mocha": "^9.1.1",

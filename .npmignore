@@ -1,5 +1,5 @@
 .idea
 src
-test.mjs
+test
 esbuild.mjs
 tsconfig.json

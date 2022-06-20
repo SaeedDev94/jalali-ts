@@ -56,13 +56,6 @@ const normalizeMilliseconds = (ms: string): number => {
   return ms.length > 3 ? -1 : Number(ms);
 }
 
-const checkTimeZone = () => {
-  const tz = Intl?.DateTimeFormat()?.resolvedOptions()?.timeZone;
-  if (tz !== 'Asia/Tehran') {
-    console.warn(`System TZ must be equal to 'Asia/Tehran' or you may getting unexpected results`, `current value: ${tz}`);
-  }
-}
-
 const zeroPad = (value: number): string => String(value).padStart(2, '0');
 
 const throwError = (value: string) => {throw new Error(`Invalid: ${value}`)};
@@ -74,7 +67,6 @@ export {
   normalizeNumbers,
   normalizeHours,
   normalizeMilliseconds,
-  checkTimeZone,
   zeroPad,
   throwError
 }

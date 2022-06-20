@@ -28,7 +28,7 @@ export class Jalali {
     }
   }
 
-  static parse(stringValue: string, includeMilliseconds: boolean = false): Jalali {
+  static parse(stringValue: string): Jalali {
     const value: string = normalizeNumbers(stringValue);
     const matches: string[] = (value.match(/\d\d?\d?\d?/g) || []);
     const empty: string[] = new Array(7).fill('0');
@@ -37,7 +37,7 @@ export class Jalali {
       .map((val: string, index: number): number => {
         let numberValue: number = Number(val);
         if (index === 3) numberValue = normalizeHours(value, Number(val));
-        else if (index === 6) numberValue = includeMilliseconds ? normalizeMilliseconds(val) : 0;
+        else if (index === 6) numberValue = normalizeMilliseconds(val);
         return numberValue;
       });
 

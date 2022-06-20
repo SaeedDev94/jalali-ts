@@ -23,9 +23,11 @@ export class Jalali {
     public date: Date = new Date(),
     includeMS: boolean = true
   ) {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (timeZone !== 'Asia/Tehran') {
-      throwError(`TZ: ${timeZone}`);
+    const targetTimeZone = 'Asia/Tehran';
+    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (systemTimeZone !== targetTimeZone) {
+      console.warn(`Your system time zone doesn't equal to '${targetTimeZone}', current: ${systemTimeZone}`);
+      console.warn(`You may getting unexpected results (calculated timestamp)`);
     }
     if (!includeMS) this.date.setMilliseconds(0);
   }

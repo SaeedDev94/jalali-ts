@@ -224,6 +224,7 @@ export class Jalali {
     let hours: number = ref.getHours();
     const minutes: number = ref.getMinutes();
     const seconds: number = ref.getSeconds();
+    const ms: number = ref.getMilliseconds();
 
     if (format.includes('YYYY')) value = value.replace('YYYY', String(year));
     if (format.includes('MM')) value = value.replace('MM', zeroPad(month));
@@ -232,6 +233,7 @@ export class Jalali {
     if (format.includes('HH')) value = value.replace('HH', zeroPad(hours));
     if (format.includes('mm')) value = value.replace('mm', zeroPad(minutes));
     if (format.includes('ss')) value = value.replace('ss', zeroPad(seconds));
+    if (format.includes('SSS')) value = value.replace('SSS', zeroPad(ms, 3));
 
     if (format.includes('hh')) {
       const symbol = hours >= 12 ? 'pm' : 'am';

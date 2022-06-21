@@ -21,7 +21,6 @@ Cons:
 
 - Limitation for parsing input date
 - Limitation for output format
-- Time zone limited to 'Asia/Tehran'
 
 # Install
 

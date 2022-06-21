@@ -23,14 +23,21 @@ export class Jalali {
     public date: Date = new Date(),
     includeMS: boolean = true
   ) {
-    const targetTimeZone = 'Asia/Tehran';
-    const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    if (systemTimeZone !== targetTimeZone) {
-      console.warn(`Your system time zone doesn't equal to '${targetTimeZone}', current: ${systemTimeZone}`);
-      console.warn(`You may getting unexpected results (calculated timestamp)`);
+    if (Jalali.checkTimeZone) {
+      const targetTimeZone = 'Asia/Tehran';
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (systemTimeZone !== targetTimeZone) {
+        console.warn(`Your system time zone doesn't equal to '${targetTimeZone}', current: ${systemTimeZone}`);
+        console.warn(`You may getting unexpected results (calculated timestamp)`);
+      }
     }
-    if (!includeMS) this.date.setMilliseconds(0);
+
+    if (!includeMS) {
+      this.date.setMilliseconds(0);
+    }
   }
+
+  static checkTimeZone: boolean = true;
 
   static parse(stringValue: string, includeMS: boolean = true): Jalali {
     const value: string = normalizeNumbers(stringValue);

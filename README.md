@@ -82,3 +82,23 @@ dateTimeNoMilliseconds.valueOf(); // 1582455607000
 dateTimeNoMilliseconds.getMilliseconds(); // 0
 dateTime.gregorian('YYYY-MM-DD HH:mm:ss.SSS'); // 2020-02-23 14:30:07.000
 ```
+
+# Time Zone
+
+If you rely on timestamp please make sure your environment time zone is correct:
+
+```typescript
+process.env.TZ = 'UTC'; // The default time zone for servers!
++Jalali.parse('1399-02-02 08:30:00 PM'); // 1587501000000
+
+process.env.TZ = 'Asia/Tehran';
++Jalali.parse('1399-02-02 08:30:00 PM'); // 1587484800000
+```
+
+As you can see there is `16200000` ms offset (`UTC+04:30`) for a same datetime string!  
+`jalali-ts` checks your system time zone and if it's not equal to `Asia/Tehran` then print a warning about it.  
+If you want to disable time zone check:
+
+```typescript
+Jalali.checkTimeZone = false;
+```

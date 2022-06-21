@@ -65,8 +65,8 @@ export class Jalali {
     return new Jalali(new Date(), includeMS);
   }
 
-  clone(): Jalali {
-    return Jalali.timestamp(+this);
+  clone(includeMS: boolean = true): Jalali {
+    return Jalali.timestamp(+this, includeMS);
   }
 
   valueOf(): number {

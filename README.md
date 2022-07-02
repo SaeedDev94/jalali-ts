@@ -110,4 +110,8 @@ Jalali.timeZone = 'Asia/Kabul';
 
 > **Note**  
 > If running env is node `Jalali.timeZone = 'value'`  
-> Will change system time zone!
+> Will change system time zone!  
+> If you don't want `jalali-ts` touch your system time zone (node process):  
+> ```typescript
+> Jalali.setTimeZone = false;
+> ```

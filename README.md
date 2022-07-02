@@ -95,9 +95,19 @@ process.env.TZ = 'Asia/Tehran';
 ```
 
 As you can see there is `16200000` ms offset (`UTC+04:30`) for a same datetime string!  
-`jalali-ts` checks your system time zone and if it's not equal to `Asia/Tehran` it will print a warning about it.  
+`jalali-ts` checks your system time zone and if it's not equal to `Jalali.defaultTimeZone = 'Asia/Tehran'` it will print a warning about it.  
 To disable time zone check:
 
 ```typescript
 Jalali.checkTimeZone = false;
 ```
+
+If you want to change time zone value:
+
+```typescript
+Jalali.timeZone = 'Asia/Kabul';
+```
+
+> **Note**  
+> If running env is node `Jalali.timeZone = 'value'`  
+> Will change system time zone!

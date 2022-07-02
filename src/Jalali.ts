@@ -37,8 +37,8 @@ export class Jalali {
     }
   }
 
-  static setTimeZone: boolean = true;
   static checkTimeZone: boolean = true;
+  static setTimeZone: boolean = true;
   static set timeZone(value: string) {
     this._timeZone = value;
     if (this.setTimeZone && typeof process === 'object' && process?.release?.name === 'node') {

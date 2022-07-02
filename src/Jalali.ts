@@ -37,11 +37,11 @@ export class Jalali {
     }
   }
 
+  static setTimeZone: boolean = true;
   static checkTimeZone: boolean = true;
   static set timeZone(value: string) {
     this._timeZone = value;
-    /** Set time zone if running env is node */
-    if (typeof process === 'object' && process?.release?.name === 'node') {
+    if (this.setTimeZone && typeof process === 'object' && process?.release?.name === 'node') {
       process.env.TZ = value;
     }
   }

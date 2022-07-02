@@ -79,7 +79,7 @@ dateTime.gregorian('YYYY-MM-DD HH:mm:ss.SSS'); // 2020-02-23 14:30:07.050
 const dateTimeNoMilliseconds = Jalali.parse('1398/12/04 02:30:07:05 PM', false);
 dateTimeNoMilliseconds.valueOf(); // 1582455607000
 dateTimeNoMilliseconds.getMilliseconds(); // 0
-dateTime.gregorian('YYYY-MM-DD HH:mm:ss.SSS'); // 2020-02-23 14:30:07.000
+dateTimeNoMilliseconds.gregorian('YYYY-MM-DD HH:mm:ss.SSS'); // 2020-02-23 14:30:07.000
 ```
 
 # Time Zone

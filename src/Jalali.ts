@@ -39,14 +39,14 @@ export class Jalali {
 
   static checkTimeZone: boolean = true;
   static setTimeZone: boolean = true;
+  static readonly defaultTimeZone: string = 'Asia/Tehran';
+  private static _timeZone?: string;
   static set timeZone(value: string) {
     this._timeZone = value;
     if (this.setTimeZone && typeof process === 'object' && process?.release?.name === 'node') {
       process.env.TZ = value;
     }
   }
-  static readonly defaultTimeZone: string = 'Asia/Tehran';
-  private static _timeZone?: string;
 
   static parse(stringValue: string, includeMS: boolean = true): Jalali {
     const value: string = normalizeNumbers(stringValue);

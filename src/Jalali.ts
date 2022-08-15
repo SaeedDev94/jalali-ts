@@ -24,7 +24,7 @@ export class Jalali {
     includeMS: boolean = true
   ) {
     if (Jalali.checkTimeZone) {
-      const targetTimeZone: string = Jalali._timeZone ?? Jalali.defaultTimeZone;
+      const targetTimeZone: string = Jalali.timeZone;
       const systemTimeZone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (systemTimeZone !== targetTimeZone) {
         console.warn(`Your system time zone doesn't equal to '${targetTimeZone}', current: ${systemTimeZone}`);
@@ -41,11 +41,16 @@ export class Jalali {
   static setTimeZone: boolean = true;
   static readonly defaultTimeZone: string = 'Asia/Tehran';
   private static _timeZone?: string;
+
   static set timeZone(value: string) {
     this._timeZone = value;
     if (this.setTimeZone && typeof process === 'object' && process?.release?.name === 'node') {
       process.env.TZ = value;
     }
+  }
+
+  static get timeZone(): string {
+    return this._timeZone ?? this.defaultTimeZone;
   }
 
   static parse(stringValue: string, includeMS: boolean = true): Jalali {

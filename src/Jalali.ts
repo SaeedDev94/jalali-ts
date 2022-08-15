@@ -1,3 +1,4 @@
+import { faMonths, faWeekDays, faWeekDaysShort } from './locale/fa.locale';
 import { Utils } from './Utils';
 import { IDate } from './interface/IDate';
 import { IUnit } from './interface/IUnit';
@@ -37,10 +38,10 @@ export class Jalali {
     }
   }
 
+  private static _timeZone?: string;
+  static readonly defaultTimeZone: string = 'Asia/Tehran';
   static checkTimeZone: boolean = true;
   static setTimeZone: boolean = true;
-  static readonly defaultTimeZone: string = 'Asia/Tehran';
-  private static _timeZone?: string;
 
   static set timeZone(value: string) {
     this._timeZone = value;
@@ -240,14 +241,23 @@ export class Jalali {
     let value: string = String(format);
     const ref = gregorian ? this.date : this;
 
+    const monthIndex: number = ref.getMonth();
+    const dayIndex: number = this.date.getDay();
+
     const year: number = ref.getFullYear();
-    const month: number = ref.getMonth() + 1;
+    const month: number = monthIndex + 1;
     const date: number = ref.getDate();
 
     let hours: number = ref.getHours();
     const minutes: number = ref.getMinutes();
     const seconds: number = ref.getSeconds();
     const ms: number = ref.getMilliseconds();
+
+    if (!gregorian) {
+      if (format.includes('dddd')) value = value.replace('dddd', faWeekDays[dayIndex]);
+      if (format.includes('dd')) value = value.replace('dd', faWeekDaysShort[dayIndex]);
+      if (format.includes('MMMM')) value = value.replace('MMMM', faMonths[monthIndex]);
+    }
 
     if (format.includes('YYYY')) value = value.replace('YYYY', String(year));
     if (format.includes('MM')) value = value.replace('MM', zeroPad(month));
